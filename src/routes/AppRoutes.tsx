@@ -1,10 +1,9 @@
-import { Routes, Route, Navigate } from "react-router-dom";
-import routes from "./routes";
-import RootTemplate from "@/components/Layout";
-import { useAuthStore } from "@/contexts/authContext";
-
+import { Routes, Route, Navigate } from 'react-router-dom';
+import routes from './routes';
+import RootTemplate from '@/components/Layout';
+import { useAuth } from '@contexts/authContext';
 export default function AppRoutes() {
-  const { isAuthenticated } = useAuthStore();
+  const { isAuthenticated } = useAuth();
 
   return (
     <Routes>

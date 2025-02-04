@@ -1,5 +1,5 @@
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 interface User {
   id: string;
@@ -30,17 +30,17 @@ export const useAuth = create<AuthState>()(
 
         // Mock do usuário para desenvolvimento
         const mockUser = {
-          id: "1",
-          name: "Admin",
+          id: '1',
+          name: 'Admin',
           email: email,
-          token: "mock-token",
+          token: 'mock-token',
         };
 
         set({ user: mockUser, isAuthenticated: true });
       },
     }),
     {
-      name: "auth-storage",
+      name: 'auth-storage',
     }
   )
 );
