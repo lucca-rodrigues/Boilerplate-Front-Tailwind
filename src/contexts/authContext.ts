@@ -1,46 +1,32 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import Cookies from 'js-cookie';
 
 interface User {
-  id: string;
   name: string;
   email: string;
-  token: string;
+  id: string;
 }
 
 interface AuthState {
-  user: User | null;
+  token: string | null;
   isAuthenticated: boolean;
-  setUser: (user: User) => void;
+  user: User | null;
+  setToken: (token: string, user: User) => void;
   logout: () => void;
-  login: (email: string, password: string) => Promise<void>;
 }
 
-export const useAuth = create<AuthState>()(
-  persist(
-    (set) => ({
-      user: null,
-      isAuthenticated: false,
-      setUser: (user) => set({ user, isAuthenticated: true }),
-      logout: () => set({ user: null, isAuthenticated: false }),
-      login: async (email: string, password: string) => {
-        // TODO: Integrar com API real
-        // const response = await api.post('/auth/login', { email, password })
-        // const user = response.data
-
-        // Mock do usuário para desenvolvimento
-        const mockUser = {
-          id: '1',
-          name: 'Admin',
-          email: email,
-          token: 'mock-token',
-        };
-
-        set({ user: mockUser, isAuthenticated: true });
-      },
-    }),
-    {
-      name: 'auth-storage',
-    }
-  )
-);
+export const useAuthStore = create<AuthState>((set) => ({
+  token: Cookies.get('auth-token') || null,
+  isAuthenticated: !!Cookies.get('auth-token'),
+  user: Cookies.get('user') ? JSON.parse(Cookies.get('user') || '{}') : null,
+  setToken: (token: string, user: User) => {
+    Cookies.set('auth-token', token);
+    Cookies.set('user', JSON.stringify(user));
+    set({ token, user, isAuthenticated: true });
+  },
+  logout: () => {
+    Cookies.remove('auth-token');
+    Cookies.remove('user');
+    set({ token: null, user: null, isAuthenticated: false });
+  },
+}));

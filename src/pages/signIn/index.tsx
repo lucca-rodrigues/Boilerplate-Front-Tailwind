@@ -1,5 +1,5 @@
-import { useSignIn } from "./hooks/useSignIn";
-import { SignInTemplate } from "./template";
+import { useSignIn } from './hooks';
+import { SignInTemplate } from './template';
 
 export function SignIn() {
   const hookParams = useSignIn();
@@ -10,3 +10,4 @@ export function SignIn() {
 
   return <SignInTemplate {...sharedProps} />;
 }
+

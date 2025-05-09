@@ -1,8 +1,7 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
 .bg-primary {
   background-color: #df1d35;
   color: #fff !important;
 }
+

@@ -1,23 +1,17 @@
-import { useNavigate } from "react-router-dom";
-import { useGlobalStore } from "@/contexts/globalContext";
+import { useAuthStore } from '@/contexts/authContext';
 
-export default function useDashboard() {
-  const { plans, getPaymentPlans, subscriptions, getSubscriptions } = useGlobalStore();
+export function useDashboard() {
+  const user = useAuthStore((state) => state.user);
 
-  const navigate = useNavigate();
-
-  const calculateMonthlyRevenue = () => {
-    return subscriptions.reduce((total, subscription) => {
-      return total + Number(subscription.amount);
-    }, 0);
+  const mockData = {
+    totalUsers: 1234,
+    activeUsers: 789,
+    totalRevenue: 'R$ 50.000,00',
+    monthlyGrowth: '15%',
   };
 
   return {
-    navigate,
-    plans,
-    subscriptions,
-    monthlyRevenue: calculateMonthlyRevenue(),
-    getPaymentPlans,
-    getSubscriptions,
+    user,
+    mockData,
   };
 }

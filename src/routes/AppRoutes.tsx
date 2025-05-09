@@ -1,9 +1,18 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import routes from './routes';
 import RootTemplate from '@/components/Layout';
-import { useAuth } from '@contexts/authContext';
+import { useAuthStore } from '@/contexts/authContext';
+import { useEffect } from 'react';
+
 export default function AppRoutes() {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuthStore();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      // Aqui poderiam ser carregados dados iniciais da aplicação quando o usuário estiver autenticado
+      console.log('Usuário autenticado, carregando dados iniciais...');
+    }
+  }, [isAuthenticated]);
 
   return (
     <Routes>
